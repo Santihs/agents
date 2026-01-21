@@ -1,0 +1,10 @@
+# FreeLLM Integration Dependencies
+
+# Core dependencies
+httpx>=0.27.0           # Modern async HTTP client
+pydantic>=2.0.0         # Data validation
+python-dotenv>=1.0.0    # Environment variable management
+
+# Optional but recommended
+ipython>=8.0.0          # For notebook usage
+jupyter>=1.0.0          # For running examples
