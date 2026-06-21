@@ -13,9 +13,13 @@ def run():
     """
     Run the research crew.
     """
+    run_timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    os.makedirs(f"output/{run_timestamp}", exist_ok=True)
+
     inputs = {
-        'sector': 'Technology',
-        "current_date": str(datetime.now())
+        'sector': os.getenv('SECTOR', 'Technology'),
+        'current_date': str(datetime.now()),
+        'run_timestamp': run_timestamp,
     }
 
     # Create and run the crew

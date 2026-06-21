@@ -21,9 +21,18 @@ class PushNotificationTool(BaseTool):
     def _run(self, message: str) -> str:
         pushover_user = os.getenv("PUSHOVER_USER")
         pushover_token = os.getenv("PUSHOVER_TOKEN")
-        pushover_url = "https://api.pushover.net/1/messages.json"
+
+        if not pushover_user or not pushover_token:
+            return '{"notification": "error", "reason": "PUSHOVER_USER or PUSHOVER_TOKEN not set"}'
 
         print(f"Push: {message}")
-        payload = {"user": pushover_user, "token": pushover_token, "message": message}
-        requests.post(pushover_url, data=payload)
-        return '{"notification": "ok"}'
+        try:
+            response = requests.post(
+                "https://api.pushover.net/1/messages.json",
+                data={"user": pushover_user, "token": pushover_token, "message": message},
+                timeout=10,
+            )
+            response.raise_for_status()
+            return '{"notification": "ok"}'
+        except requests.RequestException as e:
+            return f'{{"notification": "error", "reason": "{e}}}"'

@@ -1,3 +1,10 @@
 .env
 __pycache__/
 .DS_Store
+.venv/
+output/
+memory/
+*.db
+*.pyc
+.pytest_cache/
+
