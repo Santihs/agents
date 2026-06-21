@@ -1,1 +1,19 @@
-{"companies":[{"name":"LumeCube","ticker":"N/A","reason":"A leader in manufacturing portable lighting solutions for photography, videography, and live streaming."},{"name":"Epic MegaGrants","ticker":"N/A","reason":"A program by Epic Games that funds developers and creators to encourage innovation within the industry."},{"name":"Synapse","ticker":"N/A","reason":"Offering advanced AI solutions to automate business processes and enhance collaboration."},{"name":"Boom Supersonic","ticker":"N/A","reason":"Pioneering the return of supersonic flights with their Overture aircraft designed to be sustainable."},{"name":"Figma","ticker":"N/A","reason":"A platform for interface design that has increased its popularity significantly, promoting collaborative design work."},{"name":"Notion","ticker":"N/A","reason":"A workspace tool that combines notes, tasks, and databases, gaining traction for its versatility."},{"name":"Fivetran","ticker":"N/A","reason":"A data integration platform that automates the data pipeline process, enhancing data accessibility for businesses."},{"name":"Zapier","ticker":"N/A","reason":"Enabling automation of workflows by connecting various apps, simplifying task processes for users."},{"name":"Gusto","ticker":"N/A","reason":"Providing modern solutions for payroll and HR management targeted at small businesses."},{"name":"Calendly","ticker":"N/A","reason":"Simplifying appointment scheduling by allowing users to share available times effectively."}]}
+{
+  "companies": [
+    {
+      "name": "xAI",
+      "ticker": "N/A",
+      "reason": "xAI is a newly trending AI company (founded in 2023, headquartered in Burlingame, CA) capturing attention for its innovative approach to artificial intelligence and recent major funding rounds, as featured in major tech publications. It is less established than giants, focusing heavily on cutting-edge ML innovation."
+    },
+    {
+      "name": "CapStack",
+      "ticker": "N/A",
+      "reason": "CapStack (founded in 2022, headquartered in San Francisco, CA, ~50 employees) is gaining visibility as a new, less-known company leading innovation in financial technology solutions. Recent credible reports highlight its successful seed funding and disruptive market impact in the fintech space."
+    },
+    {
+      "name": "Mach Industries",
+      "ticker": "N/A",
+      "reason": "Mach Industries (founded in 2017, headquartered in Hawthorne, CA, ~150 employees) is making headlines for its cutting-edge developments in decentralized technology infrastructure and machine learning integration. It is a less established but highly innovative tech startup recently featured in niche technology publications."
+    }
+  ]
+}

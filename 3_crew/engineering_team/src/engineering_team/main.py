@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import sys
 import warnings
 import os
 from datetime import datetime
@@ -8,37 +7,82 @@ from engineering_team.crew import EngineeringTeam
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-# Create output directory if it doesn't exist
-os.makedirs('output', exist_ok=True)
+REQUIREMENTS = """
+## Goal
+Build a self-contained, in-memory account management system for a single-user trading simulation platform.
+No external dependencies beyond the Python standard library. No database or file persistence required.
 
-requirements = """
-A simple account management system for a trading simulation platform.
-The system should allow users to create an account, deposit funds, and withdraw funds.
-The system should allow users to record that they have bought or sold shares, providing a quantity.
-The system should calculate the total value of the user's portfolio, and the profit or loss from the initial deposit.
-The system should be able to report the holdings of the user at any point in time.
-The system should be able to report the profit or loss of the user at any point in time.
-The system should be able to list the transactions that the user has made over time.
-The system should prevent the user from withdrawing funds that would leave them with a negative balance, or
- from buying more shares than they can afford, or selling shares that they don't have.
- The system has access to a function get_share_price(symbol) which returns the current price of a share, and includes a test implementation that returns fixed prices for AAPL, TSLA, GOOGL.
+## Constructor
+Account(get_share_price: Callable[[str], float])
+- Accepts a `get_share_price(symbol: str) -> float` callable as its only parameter.
+- Include a module-level test implementation: `test_get_share_price(symbol: str) -> float`
+  returning fixed prices: AAPL=182.0, TSLA=250.0, GOOGL=140.0. Raise ValueError for unknown symbols.
+
+## Methods
+
+### Cash Management
+- deposit(amount: float) -> None
+  Add funds to cash balance. Raise ValueError if amount <= 0.
+
+- withdraw(amount: float) -> None
+  Deduct funds from cash balance. Raise ValueError if amount <= 0 or if it would result in a negative balance.
+
+### Share Trading
+- buy(symbol: str, quantity: int) -> None
+  Purchase shares at the current price from get_share_price(symbol).
+  Raise ValueError if quantity <= 0 or if the total cost exceeds the available cash balance.
+
+- sell(symbol: str, quantity: int) -> None
+  Sell shares at the current price from get_share_price(symbol).
+  Raise ValueError if quantity <= 0 or if the user holds fewer shares than the requested quantity.
+
+### Portfolio Reporting
+- get_holdings() -> dict[str, int]
+  Return a mapping of symbol -> quantity for all shares currently held. Exclude symbols with zero quantity.
+
+- get_portfolio_value() -> float
+  Return the total market value of all held shares at current prices. Excludes cash balance.
+
+- get_total_value() -> float
+  Return cash balance + get_portfolio_value().
+
+- get_profit_loss() -> float
+  Return get_total_value() minus the total amount ever deposited via deposit().
+  Withdrawals do not reduce the deposit baseline — they are treated as money taken out of profit.
+
+### Transaction History
+- get_transactions() -> list[dict]
+  Return all transactions in chronological order. Each transaction is a dict with keys:
+    - type: str         — one of "deposit", "withdrawal", "buy", "sell"
+    - symbol: str       — ticker symbol, empty string for cash transactions
+    - quantity: int     — number of shares, 0 for cash transactions
+    - price: float      — price per share at time of transaction, 0.0 for cash transactions
+    - amount: float     — total cash impact (positive for deposit/sell, negative for withdrawal/buy)
+    - timestamp: str    — ISO 8601 format from datetime.now().isoformat()
+
+## Constraints
+- All monetary values are floats denominated in USD.
+- quantity parameters must be positive integers; validate before executing any trade.
+- Every successful deposit, withdrawal, buy, and sell must append an entry to the transaction log.
+- All methods must be fully type-annotated.
 """
-module_name = "accounts.py"
-class_name = "Account"
+MODULE_NAME = "accounts.py"
+CLASS_NAME = "Account"
 
 
-def run():
-    """
-    Run the research crew.
-    """
+def run() -> None:
+    output_dir = os.path.join(
+        "output", datetime.now().strftime("%Y%m%d_%H%M%S"))
+    os.makedirs(output_dir, exist_ok=True)
+
     inputs = {
-        'requirements': requirements,
-        'module_name': module_name,
-        'class_name': class_name
+        "requirements": REQUIREMENTS,
+        "module_name": MODULE_NAME,
+        "class_name": CLASS_NAME,
+        "output_dir": output_dir,
     }
 
-    # Create and run the crew
-    result = EngineeringTeam().crew().kickoff(inputs=inputs)
+    EngineeringTeam().crew().kickoff(inputs=inputs)
 
 
 if __name__ == "__main__":
